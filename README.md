@@ -32,6 +32,6 @@ go build -o wodo
 ## Dependencies
 
 - [cobra](https://github.com/spf13/cobra)
-- [viber](https://github.com/spf13/viper)
-- [promtui](https://github.com/manifoldco/promptui)
+- [viper](https://github.com/spf13/viper)
+- [promptui](https://github.com/manifoldco/promptui)
 
