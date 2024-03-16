@@ -5,12 +5,12 @@ import (
 	"slices"
 )
 
-type Day struct {
+type WorkDay struct {
 	Date    int64   `json:"date"`
 	Entries []Entry `json:"entries"`
 }
 
-func (d *Day) AddEntry(entry Entry) {
+func (d *WorkDay) AddEntry(entry Entry) {
 	d.Entries = slices.Insert(d.Entries, len(d.Entries), entry)
 }
 

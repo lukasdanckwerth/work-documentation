@@ -19,8 +19,9 @@ func init() {
 }
 
 var summaryCmd = &cobra.Command{
-	Use:   "sum",
-	Short: "Lists to current month",
+	Use:     "sum",
+	Aliases: []string{"month"},
+	Short:   "Lists to current month",
 	Run: func(cmd *cobra.Command, args []string) {
 
 		directory := model.WorkDirectory()
@@ -46,12 +47,12 @@ var summaryCmd = &cobra.Command{
 			return theMap[keys[i]] > theMap[keys[j]]
 		})
 
-		t := table.NewWriter()
-		t.SetOutputMirror(os.Stdout)
-		t.AppendHeader(table.Row{"#", "task", "start", "length", "length CATS"})
+		tw := table.NewWriter()
+		tw.SetOutputMirror(os.Stdout)
+		tw.AppendHeader(table.Row{"#", "task", "start", "length", "length CATS"})
 
 		for i, title := range keys {
-			t.AppendRow(
+			tw.AppendRow(
 				table.Row{
 					i,
 					title,
@@ -62,9 +63,9 @@ var summaryCmd = &cobra.Command{
 			)
 		}
 
-		t.AppendSeparator()
-		t.AppendFooter(table.Row{"", "", "Total", model.Format(total), model.FormatCats(total)})
+		tw.AppendSeparator()
+		tw.AppendFooter(table.Row{"", "", "Total", model.Format(total), model.FormatCats(total)})
 
-		t.Render()
+		tw.Render()
 	},
 }

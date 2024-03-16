@@ -1,7 +1,6 @@
 package model
 
 import (
-	"fmt"
 	"log"
 	"os"
 	"strings"
@@ -12,6 +11,7 @@ type Directory struct {
 	Path string
 }
 
+// Creates and receive the working directory.
 func WorkDirectory() *Directory {
 	dirname, err := os.UserHomeDir()
 
@@ -24,18 +24,17 @@ func WorkDirectory() *Directory {
 	}
 }
 
-func (d *Directory) ReceiveDay(year string, month string, day string) *Day {
+// Receives the WorkDay
+func (d *Directory) ReceiveDay(year string, month string, day string) *WorkDay {
 	theDir := strings.Join([]string{d.Path, year, month}, "/")
 	thePath := strings.Join([]string{theDir, day}, "/") + ".json"
 
 	os.MkdirAll(theDir, os.ModePerm)
 
-	fmt.Printf("thePath: %v\n", theDir)
-
 	dayObj := ReadDay(thePath)
 
 	if dayObj == nil {
-		dayObj = &Day{
+		dayObj = &WorkDay{
 			Date:    time.Now().UnixMilli(),
 			Entries: []Entry{},
 		}
@@ -44,7 +43,7 @@ func (d *Directory) ReceiveDay(year string, month string, day string) *Day {
 	return dayObj
 }
 
-func (d *Directory) WriteWorkday(dayObj *Day, year string, month string, day string) {
+func (d *Directory) WriteWorkday(dayObj *WorkDay, year string, month string, day string) {
 	theDir := strings.Join([]string{d.Path, year, month}, "/")
 	thePath := strings.Join([]string{theDir, day}, "/") + ".json"
 
@@ -57,7 +56,7 @@ func (d *Directory) WriteWorkday(dayObj *Day, year string, month string, day str
 	}
 }
 
-func (d *Directory) ReceiveMonth(year string, month string) []*Day {
+func (d *Directory) ReceiveMonth(year string, month string) []*WorkDay {
 	theDir := strings.Join([]string{d.Path, year, month}, "/")
 	entries, err := os.ReadDir(theDir)
 
@@ -65,7 +64,7 @@ func (d *Directory) ReceiveMonth(year string, month string) []*Day {
 		panic(err)
 	}
 
-	days := []*Day{}
+	days := []*WorkDay{}
 
 	for _, entry := range entries {
 		dayObj := ReadDay(strings.Join([]string{theDir, entry.Name()}, "/"))

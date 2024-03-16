@@ -5,7 +5,7 @@ import (
 	"os"
 )
 
-func ReadDay(thePath string) *Day {
+func ReadDay(thePath string) *WorkDay {
 
 	b, err := os.ReadFile(thePath)
 
@@ -13,7 +13,7 @@ func ReadDay(thePath string) *Day {
 		return nil
 	}
 
-	var day *Day
+	var day *WorkDay
 	err = json.Unmarshal([]byte(b), &day)
 
 	if err != nil {
@@ -23,7 +23,7 @@ func ReadDay(thePath string) *Day {
 	return day
 }
 
-func WriteDay(day *Day, thePath string) error {
+func WriteDay(day *WorkDay, thePath string) error {
 	jsonBytes, err := json.MarshalIndent(day, "", " ")
 
 	if err != nil {

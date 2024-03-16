@@ -18,8 +18,9 @@ func init() {
 }
 
 var listCmd = &cobra.Command{
-	Use:   "list",
-	Short: "List to current day",
+	Use:     "list",
+	Aliases: []string{"day"},
+	Short:   "List to current day",
 	Run: func(cmd *cobra.Command, args []string) {
 
 		directory := model.WorkDirectory()
