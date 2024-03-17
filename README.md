@@ -41,5 +41,5 @@ go build -o wodo
 - [cobra](https://github.com/spf13/cobra)
 - [viper](https://github.com/spf13/viper)
 - [promptui](https://github.com/manifoldco/promptui)
-- [go-pretty](github.com/jedib0t/go-pretty/v6)
+- [go-pretty](https://github.com/jedib0t/go-pretty/v6)
 
