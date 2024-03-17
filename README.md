@@ -1,5 +1,8 @@
 # work-documentation
 
+
+## Usage
+
 ```
 wodo (work documentation) is tool to simply, fast and affortless documentation your work
 
@@ -29,9 +32,14 @@ Build local with.
 go build -o wodo
 ```
 
+### Add task
+
+
+
 ## Dependencies
 
 - [cobra](https://github.com/spf13/cobra)
 - [viper](https://github.com/spf13/viper)
 - [promptui](https://github.com/manifoldco/promptui)
+- [go-pretty](github.com/jedib0t/go-pretty/v6)
 

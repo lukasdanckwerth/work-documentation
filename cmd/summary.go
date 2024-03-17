@@ -20,7 +20,7 @@ func init() {
 
 var summaryCmd = &cobra.Command{
 	Use:     "sum",
-	Aliases: []string{"month"},
+	Aliases: []string{"month", "mt", "m"},
 	Short:   "Lists to current month",
 	Run: func(cmd *cobra.Command, args []string) {
 

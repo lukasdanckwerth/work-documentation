@@ -26,7 +26,7 @@ func WorkDirectory() *Directory {
 }
 
 // Receives the WorkDay
-func (d *Directory) ReceiveDay(year string, month string, day string) *WorkDay {
+func (d *Directory) ReceiveWorkday(year string, month string, day string) *WorkDay {
 	theDir := strings.Join([]string{d.Path, year, month}, "/")
 	thePath := strings.Join([]string{theDir, day}, "/") + ".json"
 

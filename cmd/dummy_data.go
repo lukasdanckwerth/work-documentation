@@ -31,12 +31,12 @@ var dummyDataCmd = &cobra.Command{
 
 		directory := model.WorkDirectory()
 
-		dayObj := directory.ReceiveDay(dYear, dMonth, dDay)
+		dayObj := directory.ReceiveWorkday(dYear, dMonth, dDay)
 		dayObj.AddEntry(*createEntry("fiss amt 33", 240))
 		dayObj.AddEntry(*createEntry("jf", 120))
 		directory.WriteWorkday(dayObj, dYear, dMonth, dDay)
 
-		yesterdayObj := directory.ReceiveDay(dYear, dMonth, dYesterday)
+		yesterdayObj := directory.ReceiveWorkday(dYear, dMonth, dYesterday)
 		yesterdayObj.AddEntry(*createEntry("fiss amt 13", 200))
 		yesterdayObj.AddEntry(*createEntry("veranstaltungskalender", 200))
 		directory.WriteWorkday(yesterdayObj, dYear, dMonth, dYesterday)

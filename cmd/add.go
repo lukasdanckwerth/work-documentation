@@ -1,3 +1,6 @@
+// Copyright 2024 Lukas Danckwerth
+//
+
 package cmd
 
 import (
@@ -6,8 +9,11 @@ import (
 	"strings"
 	"time"
 
+	"github.com/google/uuid"
 	"github.com/lukasdanckwerth/work-documentation/model"
+	"github.com/manifoldco/promptui"
 	"github.com/spf13/cobra"
+	"github.com/spf13/viper"
 )
 
 var year string
@@ -24,35 +30,81 @@ func init() {
 }
 
 var addCmd = &cobra.Command{
-	Use:   "add <describe> <your> <task>...",
-	Short: "Add a task done today",
+	Use:     "add <describe> <your> <task>...",
+	Short:   "Add a task done today",
+	Aliases: []string{"a"},
 	Run: func(cmd *cobra.Command, args []string) {
 
+		var title = strings.Join(args, " ")
 		if len(args) == 0 {
-			fmt.Println("Not taksk provided.")
-			os.Exit(0)
+			title = promtTaskTitle()
 		}
 
-		var title = strings.Join(args, " ")
+		if title == "" {
+			fmt.Println("no task title provided")
+			os.Exit(1)
+		}
+
 		var entry = model.Entry{
 			Title:   title,
 			Created: time.Now().UnixMilli(),
+			UUID:    uuid.NewString(),
 		}
 
-		if length != "" {
-			var length, error = model.ParseTime(length)
-			if error != nil {
-				fmt.Println(error)
-				os.Exit(1)
-			}
-
-			entry.Length = length
+		if length == "" {
+			length = promptLength()
 		}
 
-		directory := model.WorkDirectory()
-		dayObj := directory.ReceiveDay(year, month, day)
-		dayObj.AddEntry(entry)
+		var length, error = model.ParseTime(length)
+		if error != nil {
+			fmt.Println(error)
+			os.Exit(1)
+		}
 
-		directory.WriteWorkday(dayObj, year, month, day)
+		entry.Length = length
+
+		d := model.WorkDirectory()
+		wd := d.ReceiveWorkday(year, month, day)
+		wd.AddEntry(entry)
+
+		d.WriteWorkday(wd, year, month, day)
 	},
+}
+
+func promtTaskTitle() string {
+
+	var taskOptions = viper.GetStringSlice("tasks")
+
+	prompt := promptui.Select{
+		Label: "Select task",
+		Items: taskOptions,
+	}
+
+	_, result, err := prompt.Run()
+
+	if err != nil {
+		fmt.Printf("Prompt failed %v\n", err)
+		os.Exit(1)
+	}
+
+	return result
+}
+
+func promptLength() string {
+
+	var lengthOptions = viper.GetStringSlice("lengths")
+
+	prompt := promptui.Select{
+		Label: "Select length",
+		Items: lengthOptions,
+	}
+
+	_, result, err := prompt.Run()
+
+	if err != nil {
+		fmt.Printf("Prompt failed %v\n", err)
+		os.Exit(1)
+	}
+
+	return result
 }

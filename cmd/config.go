@@ -2,10 +2,12 @@ package cmd
 
 import (
 	"fmt"
+	"log"
 
 	"github.com/manifoldco/promptui"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
+	"gopkg.in/yaml.v3"
 )
 
 func init() {
@@ -38,17 +40,24 @@ var createConfig = &cobra.Command{
 		}
 
 		fmt.Printf("You choose %q\n", result)
+
+		err = viper.SafeWriteConfig()
 	},
 }
 
+// Read and print the config
 var readConfig = &cobra.Command{
-	Use:   "write",
+	Use:   "read",
 	Short: "Read the config file",
 	Run: func(cmd *cobra.Command, args []string) {
-		err := viper.SafeWriteConfig()
+
+		c := viper.AllSettings()
+		bs, err := yaml.Marshal(c)
 
 		if err != nil {
-			panic(err)
+			log.Fatalf("unable to marshal config to YAML: %v", err)
 		}
+
+		fmt.Println(string(bs))
 	},
 }

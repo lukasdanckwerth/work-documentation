@@ -19,25 +19,20 @@ func init() {
 
 var listCmd = &cobra.Command{
 	Use:     "list",
-	Aliases: []string{"day"},
+	Aliases: []string{"day", "ls", "l"},
 	Short:   "List to current day",
 	Run: func(cmd *cobra.Command, args []string) {
 
 		directory := model.WorkDirectory()
-		dayObj := directory.ReceiveDay(year, month, day)
+		dayObj := directory.ReceiveWorkday(year, month, day)
 
 		t := table.NewWriter()
 		t.SetOutputMirror(os.Stdout)
 		t.AppendHeader(table.Row{"#", "task", "start", "length"})
 
 		for i, v := range dayObj.Entries {
-			t.AppendRow(table.Row{i + 1, v.Title, time.UnixMilli(v.Start), v.LenghtFormatted()})
+			t.AppendRow(table.Row{i + 1, v.Title, time.UnixMilli(v.Created), v.LenghtFormatted()})
 		}
-
-		// t.AppendRows([]table.Row{
-		// 	{1, "Arya", "Stark", 3000},
-		// 	{20, "Jon", "Snow", 2000, "You know nothing, Jon Snow!"},
-		// })
 
 		// t.AppendSeparator()
 		// t.AppendRow([]interface{}{300, "Tyrion", "Lannister", 5000})
