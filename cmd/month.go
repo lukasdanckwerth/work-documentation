@@ -12,15 +12,15 @@ import (
 )
 
 func init() {
-	rootCmd.AddCommand(summaryCmd)
-	summaryCmd.Flags().StringVarP(&day, "day", "d", fmt.Sprint(time.Now().Day()), "Day to list")
-	summaryCmd.Flags().StringVarP(&month, "month", "m", fmt.Sprint(int(time.Now().Month())), "Month to list")
-	summaryCmd.Flags().StringVarP(&year, "year", "y", fmt.Sprint(time.Now().Year()), "Year to list")
+	rootCmd.AddCommand(monthCmd)
+	monthCmd.Flags().StringVarP(&day, "day", "d", fmt.Sprint(time.Now().Day()), "Day to list")
+	monthCmd.Flags().StringVarP(&month, "month", "m", fmt.Sprint(int(time.Now().Month())), "Month to list")
+	monthCmd.Flags().StringVarP(&year, "year", "y", fmt.Sprint(time.Now().Year()), "Year to list")
 }
 
-var summaryCmd = &cobra.Command{
-	Use:     "sum",
-	Aliases: []string{"month", "mt", "m"},
+var monthCmd = &cobra.Command{
+	Use:     "month",
+	Aliases: []string{"m", "mt"},
 	Short:   "Lists to current month",
 	Run: func(cmd *cobra.Command, args []string) {
 
@@ -49,22 +49,21 @@ var summaryCmd = &cobra.Command{
 
 		tw := table.NewWriter()
 		tw.SetOutputMirror(os.Stdout)
-		tw.AppendHeader(table.Row{"#", "task", "start", "length", "length CATS"})
+		tw.AppendHeader(table.Row{"#", "task", "length", "decimal"})
 
 		for i, title := range keys {
 			tw.AppendRow(
 				table.Row{
 					i,
 					title,
-					time.UnixMilli(0),
 					model.Format(theMap[title]),
-					model.FormatCats(theMap[title]),
+					model.FormatDecimal(theMap[title]),
 				},
 			)
 		}
 
 		tw.AppendSeparator()
-		tw.AppendFooter(table.Row{"", "", "Total", model.Format(total), model.FormatCats(total)})
+		tw.AppendFooter(table.Row{"", "Total", model.Format(total), model.FormatDecimal(total)})
 
 		tw.Render()
 	},

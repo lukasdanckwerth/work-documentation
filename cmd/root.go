@@ -7,20 +7,24 @@ import (
 	"github.com/spf13/cobra"
 )
 
+var CommandName = "wodo"
+var Version = "0.0.2"
+
 var rootCmd = &cobra.Command{
-	Use:   "wodo [describe] [your] [task] ...",
-	Short: "wodo (work documentation) is tool to simply, fast and affortless documentation your work",
+	Use:   fmt.Sprintf("%s [describe] [your] [task] ...", CommandName),
+	Short: fmt.Sprintf("%s (work documentation) is tool to simply, fast and affortless documentate your work", CommandName),
 	Run: func(cmd *cobra.Command, args []string) {
+
 		if len(args) == 0 {
 			cmd.Help()
-			os.Exit(0)
 		}
 	},
 }
 
 func Execute() {
+	err := rootCmd.Execute()
 
-	if err := rootCmd.Execute(); err != nil {
+	if err != nil {
 		fmt.Println(err)
 		os.Exit(1)
 	}

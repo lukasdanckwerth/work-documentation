@@ -3,6 +3,7 @@ package model
 import (
 	"fmt"
 	"slices"
+	"time"
 )
 
 // A work day entity
@@ -27,4 +28,12 @@ type Entry struct {
 // Returns a formatted version of the lenght of the entry
 func (e *Entry) LenghtFormatted() string {
 	return fmt.Sprintf("%02d:%02d", e.Length/60, e.Length%60)
+}
+
+func (e *Entry) CreatedFormatted() string {
+	return time.UnixMilli(e.Created).Format("2006-01-02 15:04")
+}
+
+func (e *Entry) CreatedTimeFormatted() string {
+	return time.UnixMilli(e.Created).Format("15:04")
 }

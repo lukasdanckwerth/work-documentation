@@ -3,8 +3,8 @@ package cmd
 import (
 	"fmt"
 	"log"
+	"os"
 
-	"github.com/manifoldco/promptui"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 	"gopkg.in/yaml.v3"
@@ -12,10 +12,11 @@ import (
 
 func init() {
 	rootCmd.AddCommand(configCmd)
-	configCmd.AddCommand(createConfig)
+	configCmd.AddCommand(CreateConfig)
 	configCmd.AddCommand(readConfig)
 }
 
+// Config subcommand
 var configCmd = &cobra.Command{
 	Use:   "config",
 	Short: "Create / manipulate config",
@@ -24,24 +25,21 @@ var configCmd = &cobra.Command{
 	},
 }
 
-var createConfig = &cobra.Command{
+// Create a new config file
+var CreateConfig = &cobra.Command{
 	Use:   "create",
 	Short: "Creates the config file",
 	Run: func(cmd *cobra.Command, args []string) {
-		prompt := promptui.Prompt{
-			Label: "Do you want to create a config file?",
-		}
 
-		result, err := prompt.Run()
+		err := viper.SafeWriteConfig()
 
 		if err != nil {
-			fmt.Printf("Prompt failed %v\n", err)
-			return
+			// error message contains enough information
+			fmt.Println(err)
+			os.Exit(1)
+		} else {
+			fmt.Println("config created")
 		}
-
-		fmt.Printf("You choose %q\n", result)
-
-		err = viper.SafeWriteConfig()
 	},
 }
 

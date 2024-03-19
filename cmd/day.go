@@ -11,16 +11,16 @@ import (
 )
 
 func init() {
-	rootCmd.AddCommand(listCmd)
-	listCmd.Flags().StringVarP(&day, "day", "d", fmt.Sprint(time.Now().Day()), "Day to list")
-	listCmd.Flags().StringVarP(&month, "month", "m", fmt.Sprint(int(time.Now().Month())), "Month to list")
-	listCmd.Flags().StringVarP(&year, "year", "y", fmt.Sprint(time.Now().Year()), "Year to list")
+	rootCmd.AddCommand(dayCmd)
+	dayCmd.Flags().StringVarP(&day, "day", "d", fmt.Sprint(time.Now().Day()), "Day to list")
+	dayCmd.Flags().StringVarP(&month, "month", "m", fmt.Sprint(int(time.Now().Month())), "Month to list")
+	dayCmd.Flags().StringVarP(&year, "year", "y", fmt.Sprint(time.Now().Year()), "Year to list")
 }
 
-var listCmd = &cobra.Command{
-	Use:     "list",
-	Aliases: []string{"day", "ls", "l"},
-	Short:   "List to current day",
+var dayCmd = &cobra.Command{
+	Use:     "day",
+	Aliases: []string{"d", "l", "ls"},
+	Short:   "Lists to current day",
 	Run: func(cmd *cobra.Command, args []string) {
 
 		directory := model.WorkDirectory()
@@ -33,7 +33,12 @@ var listCmd = &cobra.Command{
 		var total int64
 
 		for i, e := range dayObj.Entries {
-			tw.AppendRow(table.Row{i + 1, e.Title, time.UnixMilli(e.Created), e.LenghtFormatted()})
+			tw.AppendRow(table.Row{
+				i + 1,
+				e.Title,
+				e.CreatedTimeFormatted(),
+				e.LenghtFormatted(),
+			})
 			total += e.Length
 		}
 

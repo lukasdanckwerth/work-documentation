@@ -21,14 +21,20 @@ func WorkDirectory() *Directory {
 	}
 
 	return &Directory{
-		Path: dirname + "/.wodo",
+		Path: dirname + "/.wodo/data",
 	}
+}
+
+func (d *Directory) GetDirAndPath(year string, month string, day string) (string, string) {
+	theDir := strings.Join([]string{d.Path, year, month}, "/")
+	thePath := strings.Join([]string{theDir, day}, "/") + ".json"
+	return theDir, thePath
 }
 
 // Receives the WorkDay
 func (d *Directory) ReceiveWorkday(year string, month string, day string) *WorkDay {
-	theDir := strings.Join([]string{d.Path, year, month}, "/")
-	thePath := strings.Join([]string{theDir, day}, "/") + ".json"
+
+	theDir, thePath := d.GetDirAndPath(year, month, day)
 
 	os.MkdirAll(theDir, os.ModePerm)
 
@@ -44,9 +50,9 @@ func (d *Directory) ReceiveWorkday(year string, month string, day string) *WorkD
 	return dayObj
 }
 
+// Write the given WorkDay
 func (d *Directory) WriteWorkday(dayObj *WorkDay, year string, month string, day string) {
-	theDir := strings.Join([]string{d.Path, year, month}, "/")
-	thePath := strings.Join([]string{theDir, day}, "/") + ".json"
+	theDir, thePath := d.GetDirAndPath(year, month, day)
 
 	os.MkdirAll(theDir, os.ModePerm)
 
@@ -57,12 +63,14 @@ func (d *Directory) WriteWorkday(dayObj *WorkDay, year string, month string, day
 	}
 }
 
+// Reveive a ann array of WorkDays for a given month and year
 func (d *Directory) ReceiveMonth(year string, month string) []*WorkDay {
-	theDir := strings.Join([]string{d.Path, year, month}, "/")
+	theDir, _ := d.GetDirAndPath(year, month, "")
 	entries, err := os.ReadDir(theDir)
 
+	// simply return an empty array if the directory doesn't exist
 	if err != nil {
-		panic(err)
+		return []*WorkDay{}
 	}
 
 	days := []*WorkDay{}
