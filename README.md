@@ -1,5 +1,10 @@
 # work-documentation
 
+<!-- TOC -->
+- [Usage](#usage)
+- [Installation](#installation)
+- [Dependencies](#dependencies)
+<!-- TOC end -->
 
 ## Usage
 
@@ -57,15 +62,19 @@ $ wodo day
 +---+---------+-------+--------+
 ```
 
+## Installation
+
 Build local with.
 
 ```bash
-go build -o wodo
+$ git clone https://github.com/lukasdanckwerth/work-documentation.git
+
+$ cd work-documentation
+
+$ go build -o wodo
+
+$ ./wodo
 ```
-
-### Add task
-
-
 
 ## Dependencies
 
