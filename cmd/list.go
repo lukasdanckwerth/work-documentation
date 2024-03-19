@@ -26,18 +26,20 @@ var listCmd = &cobra.Command{
 		directory := model.WorkDirectory()
 		dayObj := directory.ReceiveWorkday(year, month, day)
 
-		t := table.NewWriter()
-		t.SetOutputMirror(os.Stdout)
-		t.AppendHeader(table.Row{"#", "task", "start", "length"})
+		tw := table.NewWriter()
+		tw.SetOutputMirror(os.Stdout)
+		tw.AppendHeader(table.Row{"#", "task", "start", "length"})
 
-		for i, v := range dayObj.Entries {
-			t.AppendRow(table.Row{i + 1, v.Title, time.UnixMilli(v.Created), v.LenghtFormatted()})
+		var total int64
+
+		for i, e := range dayObj.Entries {
+			tw.AppendRow(table.Row{i + 1, e.Title, time.UnixMilli(e.Created), e.LenghtFormatted()})
+			total += e.Length
 		}
 
-		// t.AppendSeparator()
-		// t.AppendRow([]interface{}{300, "Tyrion", "Lannister", 5000})
-		// t.AppendFooter(table.Row{"", "", "Total", 10000})
+		tw.AppendSeparator()
+		tw.AppendFooter(table.Row{"", "", "Total", model.Format(total)})
 
-		t.Render()
+		tw.Render()
 	},
 }
