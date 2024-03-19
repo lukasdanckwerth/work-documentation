@@ -54,7 +54,7 @@ var monthCmd = &cobra.Command{
 		for i, title := range keys {
 			tw.AppendRow(
 				table.Row{
-					i,
+					i + 1,
 					title,
 					model.Format(theMap[title]),
 					model.FormatDecimal(theMap[title]),
