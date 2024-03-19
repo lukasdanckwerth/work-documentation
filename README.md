@@ -46,13 +46,7 @@ wodo a my task -l 2:30h
 ```bash
 wodo day
 
-# or..
-wodo d
-```
-
-Output:
-
-```table
+# Output:
 +---+---------+-------+--------+
 | # | TASK    | START | LENGTH |
 +---+---------+-------+--------+
