@@ -32,21 +32,22 @@ Use "wodo [command] --help" for more information about a command.
 Adding a task is as easy as.
 
 ```bash
-wodo add "my task" --length 2:30h
+$ wodo add "my task" --length 2:30h
 
 # you can leave out the emphis
-wodo add my task --length 2:30h
+$ wodo add my task --length 2:30h
 
 # or even shorter
-wodo a my task -l 2:30h
+$ wodo a my task -l 2:30h
 ```
 
 ### List tasks of current day
 
 ```bash
-wodo day
+$ wodo day
 
 # Output:
+
 +---+---------+-------+--------+
 | # | TASK    | START | LENGTH |
 +---+---------+-------+--------+
