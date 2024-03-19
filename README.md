@@ -64,7 +64,8 @@ $ wodo day
 
 ## Installation
 
-Build local with.
+Assuming you have go installed, otherwise check the go
+[installation guide](https://golang.org/doc/install).
 
 ```bash
 $ git clone https://github.com/lukasdanckwerth/work-documentation.git
