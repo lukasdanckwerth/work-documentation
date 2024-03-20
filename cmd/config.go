@@ -49,13 +49,21 @@ var readConfig = &cobra.Command{
 	Short: "Read the config file",
 	Run: func(cmd *cobra.Command, args []string) {
 
-		c := viper.AllSettings()
-		bs, err := yaml.Marshal(c)
+		var setting any
+
+		if len(args) > 0 {
+			key := args[0]
+			setting = viper.Get(key)
+		} else {
+			setting = viper.AllSettings()
+		}
+
+		bs, err := yaml.Marshal(setting)
 
 		if err != nil {
 			log.Fatalf("unable to marshal config to YAML: %v", err)
 		}
 
-		fmt.Println(string(bs))
+		fmt.Print(string(bs))
 	},
 }
