@@ -1,5 +1,7 @@
 # work-documentation
 
+> wodo (work documentation) is a command line tool to simply, fast and affortless documentate your work
+
 <!-- TOC -->
 - [Usage](#usage)
 - [Installation](#installation)
@@ -10,15 +12,12 @@
 
 <!--usage begin -->
 ```
-wodo (work documentation) is tool to simply, fast and affortless documentation your work
-
 Usage:
   wodo [describe] [your] [task] ... [flags]
   wodo [command]
 
 Available Commands:
   add         Add a task done today
-  completion  Generate the autocompletion script for the specified shell
   config      Create / manipulate config
   help        Help about any command
   list        List to current day
@@ -39,12 +38,15 @@ Adding a task is as easy as.
 ```bash
 $ wodo add "my task" --length 2:30h
 
-# you can leave out the emphis
+# you can omit the quotation marks
 $ wodo add my task --length 2:30h
 
 # or even shorter
 $ wodo a my task -l 2:30h
 ```
+
+You can also run `wodo add` without any arguments to get promted with a predefined list of 
+__tasks__ and __lengths__ in your config file.
 
 ### List tasks of current day
 

@@ -22,6 +22,9 @@ var rootCmd = &cobra.Command{
 }
 
 func Execute() {
+	// hide completion command
+	rootCmd.CompletionOptions.HiddenDefaultCmd = true
+
 	err := rootCmd.Execute()
 
 	if err != nil {
