@@ -43,7 +43,7 @@ var dayCmd = &cobra.Command{
 		}
 
 		tw.AppendSeparator()
-		tw.AppendFooter(table.Row{"", "", "Total", model.Format(total)})
+		tw.AppendFooter(table.Row{"", "Total", "", model.Format(total)})
 
 		tw.Render()
 	},

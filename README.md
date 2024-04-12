@@ -13,8 +13,7 @@
 <!--usage begin -->
 ```
 Usage:
-  wodo [describe] [your] [task] ... [flags]
-  wodo [command]
+  wodo [command] [flags]
 
 Available Commands:
   add         Add a task done today

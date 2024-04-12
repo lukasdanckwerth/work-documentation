@@ -11,7 +11,7 @@ var CommandName = "wodo"
 var Version = "0.0.2"
 
 var rootCmd = &cobra.Command{
-	Use:   fmt.Sprintf("%s [describe] [your] [task] ...", CommandName),
+	Use:   fmt.Sprintf("%s [command] [flags]", CommandName),
 	Short: fmt.Sprintf("%s (work documentation) is tool to simply, fast and affortless documentate your work", CommandName),
 	Run: func(cmd *cobra.Command, args []string) {
 
